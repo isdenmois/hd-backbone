@@ -1,0 +1,14 @@
+{
+  "name": "initlab-helpdesk",
+  "version": "0.0.1",
+  "description": "Backbone implementation of Initlab helpdesk",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "backbone"
+  ],
+  "author": "Denis Moiseev <d.moiseev@initlab.ru>",
+  "license": "ISC"
+}
