@@ -1,0 +1,58 @@
+.navbar-search {
+    margin-bottom: 0;
+    margin-top: 8px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.skin-blue .sidebar-menu > li > a.router-link-active {
+    color: #ffffff;
+    background: #1e282c;
+    border-left-color: #3c8dbc;
+}
+
+body,
+.widget-user-username,
+.timeline-header,
+.modal-title {
+    font-family: 'Roboto' !important;
+}
+
+.modal .modal-loader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+.modal .modal-loader.loading {
+    display: block;
+    opacity: 1;
+    -webkit-transition-duration: 400ms;
+    -moz-transition-duration: 400ms;
+    -ms-transition-duration: 400ms;
+    -o-transition-duration: 400ms;
+    transition-duration: 400ms;
+}
+
+.modal .modal-loader .modal-loader-content {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    margin-top: -40px;
+    margin-left: -64px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 6px;
+    -webkit-transition: opacity 1ms ease;
+    -moz-transition: opacity 1ms ease;
+    -ms-transition: opacity 1ms ease;
+    -o-transition: opacity 1ms ease;
+    transition: opacity 1ms ease;
+}

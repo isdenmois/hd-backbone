@@ -1,34 +1,40 @@
 import { Router } from 'backbone';
 import { loadData } from '../services/data';
+
 import LoginView from '../views/login/login';
+import AssignedView from '../views/assigned/assigned';
+import TaskDetail from '../views/task-detail/task-detail';
+
 import pageLoad from './pageLoad';
 
 export default class ZenRouter extends Router {
   constructor() {
     super();
     this.routes = {
-      'home': 'homeRoute',
-      'login(/*destination)': 'loginRoute',
+      'assigned': 'assigned',
+      'task/:task_id': 'taskRoute',
+      'login(/:destination)': 'loginRoute',
       '*path': 'redirectRoute'
     };
 
     this._bindRoutes();
   }
 
-  homeRoute () {
-    loadData('getAssignedTaskList')
-      .then(function (result) {
-        console.log(result)
-      })
+  assigned () {
+    pageLoad(AssignedView, {});
+  }
+
+  taskRoute (task_id) {
+    pageLoad(TaskDetail, {task_id: task_id});
   }
 
   redirectRoute () {
-    this.navigate('#home', {trigger: true});
+    this.navigate('assigned', {trigger: true});
   }
 
   loginRoute (destination) {
     pageLoad(LoginView, {
-      destination: destination || 'home'
-    });
+      destination: destination || 'assigned'
+    }, true);
   }
 }

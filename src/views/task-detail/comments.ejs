@@ -1,0 +1,38 @@
+<div class="col-sm-12">
+    <ul class="timeline">
+
+        <% for (let i = 0, l = data.length; i < l; i++) { %>
+            <% if (data[i].type == 'TIMELINE') { %>
+                <li class="time-label">
+                    <span class="bg-red">
+                        <%= data[i].time %>
+                    </span>
+                </li>
+            <% } else { %>
+                <li>
+                    <i class="{{log.icon ? 'fa fa-' + log.icon : ''}} bg-{{log.color}}" *ngIf="log.type != 'TIMELINE'"></i>
+                    <div class="timeline-item" *ngIf="log.type != 'TIMELINE'">
+                        <span class="time"><i class="fa fa-calendar-o"></i> <%= data[i].time.toString(true) %></span>
+                        <% if (data[i].hours) { %>
+                            <span class="time"><i class="fa fa-clock-o"></i> <%= data[i].hours %> hours</span>
+                        <% } %>
+
+                        <h3 class="timeline-header"><a><%= data[i].user %></a></h3>
+
+                        <div class="timeline-body"> <%= _(data[i].description).nl2br() %></div>
+                        <% if (data[i].canEdit || data[i].canDelete) { %>
+                            <div class="timeline-footer">
+                                <% if (data[i].canEdit) { %>
+                                    <a class="btn btn-primary btn-xs" >Edit</a>
+                                <% } %>
+                                <% if (data[i].canDelete) { %>
+                                    <a class="btn btn-danger btn-xs" >Delete</a>
+                                <% } %>
+                            </div>
+                        <% } %>
+                    </div>
+                </li>
+            <% } %>
+        <% } %>
+    </ul>
+</div>

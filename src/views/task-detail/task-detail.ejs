@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="alert alert-danger hidden">
+        <div>
+            <h4><i class="icon fa fa-ban"></i> Возникла ошибка!</h4>
+            <%= data.error %>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div *ngIf="task" class="box box-widget widget-user">
+            <div class="widget-user-header bg-aqua-active">
+                <h3 class="widget-user-username">#<%= data.task_id %> <%= data.title %></h3>
+            </div>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="description-block">
+                            <h5 class="description-header">Status</h5>
+                            <span class="description-text"><%= data.status %></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="description-block">
+                            <h5 class="description-header">Estimated hours</h5>
+                            <span class="description-text"><%= data.estimated %></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="description-block">
+                            <h5 class="description-header">Open Time</h5>
+                            <span class="description-text"><%= data.open_time %></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="description-block">
+                            <h5 class="description-header">Owner</h5>
+                            <span class="description-text"><%= data.user %></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="description-block">
+                            <h5 class="description-header">Worked hours</h5>
+                            <span class="description-text"><%= data.worked %></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="description-block">
+                            <h5 class="description-header">Deadline</h5>
+                            <span class="description-text"><%= data.deadline %></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr>
+                        <%= _(data.description).nl2br() %>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <a *ngIf="perms.log" class="btn btn-primary" (click)="openModal('log')">Log</a>
+                <a *ngIf="perms.assign" class="btn btn-primary" (click)="openModal('assign')">Assign</a>
+                <a *ngIf="perms.edit" class="btn btn-primary" href="/actions/edit.php?id={{task.id}}&setmode=ticket_tab_1">Edit</a>
+                <a *ngIf="perms.reject" class="btn btn-primary" href="/actions/reject.php?id={{task.id}}&setmode=ticket_tab_1">Reject</a>
+                <a *ngIf="perms.close" class="btn btn-danger" (click)="openModal('close')">Close</a>
+            </div>
+        </div>
+
+        <div class="row logs-outlet">
+        </div>
+    </div>
+
+</div>
