@@ -22,12 +22,14 @@ export default class TaskDetail extends View {
     }
   }
 
-  getRenderedData () {
-    return this.model.toJSON();
-  }
-
 }
 
 TaskDetail.prototype.fetch = function () {
   return this.promise;
 };
+
+TaskDetail.prototype.getRenderedData = function () {
+
+  return this.model.toJSON();
+};
+

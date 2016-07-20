@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { history } from 'backbone';
 const path = '/devrest';
 
 export function loadData (servlet, params = {}, method = 'GET') {
@@ -35,10 +36,19 @@ export function loadData (servlet, params = {}, method = 'GET') {
 
       return response.json();
     })
+      .then(function (data) {
+        if (data.status != 'ok') {
+          throw data.message;
+        }
+
+        return data.message;
+      })
     .catch(function (error) {
       console.error(error);
-
-      location.hash = 'login/' + location.hash.slice(1);
+        if (error.substr(0, 11) == 'error type:') {
+            const fragment = history.getFragment();
+            history.navigate('login/' + fragment);
+        }
     })
 }
 

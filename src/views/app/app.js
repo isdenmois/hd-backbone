@@ -10,8 +10,8 @@ export default class AppView extends View {
 
   initialize () {
     this.template = template();
-    this.promise = Promise.resolve(true);
     this.model = AppModel;
+    this.promise = AppModel.fetch();
 
     this.hidden = false;
 

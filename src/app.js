@@ -22,8 +22,10 @@ $(function () {
   APP_VIEW.setElement(APP_ELEMENT, true);
   APP_VIEW.render();
 
-  new ZenRouter();
-  Backbone.history.start({hashChange: false});
+  APP_VIEW.promise.then(function () {
+    new ZenRouter();
+    Backbone.history.start();
+  });
 });
 
 Date.prototype.toString = function (withTime = false) {
