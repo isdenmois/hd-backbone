@@ -1,10 +1,10 @@
 import { Router } from 'backbone';
 import { loadData } from '../services/data';
 
-import LoginView from '../views/login/login';
+import LoginView from '../views/login';
 import AssignedView from '../views/assigned/assigned';
-import TicketsView from '../views/tickets';
-import TaskDetail from '../views/task-detail/task-detail';
+import TicketsView from '../views/task-filtered-list';
+import TaskDetail from '../views/task-detail';
 
 import pageLoad from './pageLoad';
 

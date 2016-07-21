@@ -1,4 +1,4 @@
-import TaskListView from '../task-list/task-list';
+import TaskListView from '../task-list/index';
 
 export default class Assigned extends TaskListView {
 

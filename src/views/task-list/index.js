@@ -85,11 +85,19 @@ TaskListView.prototype.render = function () {
     const data = this.getRenderedData();
 
     this.$el.html(this.template);
+    this.renderTable(data);
+
+    return data;
+};
+
+/**
+ * Render table.
+ */
+TaskListView.prototype.renderTable = function (data) {
+    data = data || this.getRenderedData();
     this.$el
         .find('.table-responsive')
         .html(tableTemplate(data));
-
-    return data;
 };
 
 TaskListView.prototype.sort = function (event) {

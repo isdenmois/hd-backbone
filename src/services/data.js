@@ -44,10 +44,14 @@ export function loadData (servlet, params = {}, method = 'GET') {
         return data.message;
       })
     .catch(function (error) {
-      console.error(error);
         if (error.substr(0, 11) == 'error type:') {
-            const fragment = history.getFragment();
-            history.navigate('login/' + fragment);
+            if (history.started) {
+                const fragment = history.getFragment();
+                history.navigate('login/' + fragment);
+            }
+            else {
+                location.hash = '#login';
+            }
         }
     })
 }

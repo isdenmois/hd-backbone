@@ -5,12 +5,23 @@ import config from '../models/app';
 
 export default class TicketsCollection extends Collection {
     initialize (options) {
-        this.user_id = sessionStorage.getItem('TicketsCollectionSelectedUser');
-        this.project_id = sessionStorage.getItem('TicketsCollectionSelectedProject');
-        this.status = sessionStorage.getItem('TicketsCollectionSelectedStatus');
+        var user = sessionStorage.getItem('tickets-collection-selected-user');
+        if (user == null) {
+            user = config.get('user_id');
+        }
+        var project = sessionStorage.getItem('tickets-collection-selected-project');
+        var status = sessionStorage.getItem('tickets-collection-selected-status');
 
-        if (this.user_id == null) {
-            this.user_id = config.get('user_id');
+
+        this.filters = {};
+        if (user) {
+            this.filters.user = user;
+        }
+        if (project) {
+            this.filters.project = project;
+        }
+        if (status) {
+            this.filters.status = status;
         }
     }
 
@@ -23,13 +34,13 @@ TicketsCollection.prototype.fetch = function () {
     const collection = this;
 
     let params = {
-        oid: this.user_id
+        oid: this.filters.user
     };
-    if (this.project_id) {
-        params.pid = this.project_id;
+    if (this.filters.hasOwnProperty('project')) {
+        params.pid = this.filters.project;
     }
-    if (this.status) {
-        params.status = this.status;
+    if (this.filters.hasOwnProperty('status')) {
+        params.status = this.filters.status;
     }
 
     return loadData('getFilteredTaskList', params)
@@ -45,4 +56,21 @@ TicketsCollection.prototype.fetch = function () {
 
             collection.reset(taskList);
         })
+};
+
+/**
+ * Fetch data and trigger render.
+ */
+TicketsCollection.prototype.updateData = function (filter, value) {
+    if (value && value != '0') {
+        this.filters[filter] = value;
+        sessionStorage.setItem('tickets-collection-selected-' + filter, value);
+    }
+    else {
+        delete this.filters[filter];
+        sessionStorage.removeItem('tickets-collection-selected-' + filter);
+    }
+
+    this.fetch()
+        .then(() => this.trigger('data-update'));
 };
