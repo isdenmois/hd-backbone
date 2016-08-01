@@ -5,9 +5,10 @@ import template from './login.ejs'
 
 export default class LoginView extends View {
 
-  initialize (options) {
+  initialize (elem, options) {
     this.destination = options.destination;
     this.template = template();
+    this.render();
   }
 
   render () {

@@ -8,7 +8,14 @@ const CONTENT_ELEMENT = $('#content');
 const loading = loadingTemplate();
 
 export default function pageLoad (view, params, full = false) {
-  currentView = new view(params);
+  if (currentView && currentView.destroy) {
+    currentView.destroy();
+  }
+  startLoading();
+
+  currentView = new view({
+    el: CONTENT_ELEMENT
+  }, params);
   currentView.setElement(CONTENT_ELEMENT, true);
 
   if (full) {
@@ -18,10 +25,7 @@ export default function pageLoad (view, params, full = false) {
     AppModel.trigger('app:show');
   }
 
-  startLoading();
-  currentView.fetch().then(function () {
-    currentView.render();
-  })
+  currentView.fetch();
 }
 
 

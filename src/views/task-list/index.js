@@ -9,11 +9,12 @@ import AssignedCollection from '../../collections/assignedCollection';
 export default class TaskListView extends View {
     initialize() {
         this.collection = new AssignedCollection();
-        this.promise = this.collection.fetch();
         this.template = template();
 
         this.sortField = '';
         this.sortDir = 1;
+
+        this.listenTo(this.collection, 'reset', this.render);
     }
 }
 
@@ -56,7 +57,7 @@ TaskListView.prototype.events = {
 };
 
 TaskListView.prototype.fetch = function () {
-    return this.promise;
+    return this.promise = this.collection.fetch();
 };
 
 TaskListView.prototype.getRenderedData = function () {
@@ -117,5 +118,5 @@ TaskListView.prototype.sort = function (event) {
         });
     }
 
-    this.render();
+    this.renderTable();
 };

@@ -4,7 +4,7 @@ import { loadData } from '../services/data';
 export default class Task extends Model {
 
   initialize (options) {
-    this.set('task_id', options.task_id);
+    this.set('task_id', +options.task_id);
   }
 
   defaults () {
@@ -33,6 +33,7 @@ Task.prototype.fetch = function () {
             perms: data.perms
           });
           self.setInfo(data.task_info);
+          self.trigger('fetch');
       });
 };
 
@@ -77,7 +78,7 @@ Task.prototype.getLogs = function (logs) {
     }
 
     let log = {};
-    log.id = logs[i].lid;
+    log.id = +logs[i].lid;
     log.type = logs[i].action;
     log.task = logs[i].ticket_id;
     log.hours = logs[i].hours;

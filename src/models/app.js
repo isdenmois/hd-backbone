@@ -36,7 +36,9 @@ class AppModel extends Model {
     var promiseList = [
       loadData('getAutherizedUserInfo'),
       loadData('getFilteredUsersList'),
-      loadData('getFilteredProjectList')
+      loadData('getFilteredProjectList', {
+        status: 'TASK_STATUS_OPEN'
+      })
     ];
 
     return Promise.all(promiseList)

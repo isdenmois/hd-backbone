@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="box-footer">
-                <a *ngIf="perms.log" class="btn btn-primary" (click)="openModal('log')">Log</a>
+                <a class="btn btn-primary modal-button" data-type="log">Log</a>
                 <a *ngIf="perms.assign" class="btn btn-primary" (click)="openModal('assign')">Assign</a>
                 <a *ngIf="perms.edit" class="btn btn-primary" href="/actions/edit.php?id={{task.id}}&setmode=ticket_tab_1">Edit</a>
                 <a *ngIf="perms.reject" class="btn btn-primary" href="/actions/reject.php?id={{task.id}}&setmode=ticket_tab_1">Reject</a>

@@ -7,7 +7,6 @@ import config from '../../models/app';
 export default class TaskFilteredListView extends TaskListView {
     initialize() {
         this.collection = new TicketsCollection();
-        this.promise = this.collection.fetch();
         this.template = ticketsTemplate();
 
         this.filters = [
@@ -45,17 +44,25 @@ export default class TaskFilteredListView extends TaskListView {
 
         this.sortField = '';
         this.sortDir = 1;
+        this.templateRendered = false;
 
         this.events = {
+            ...super.events,
             'change .filter-list .task-filter': 'filterChanged'
         };
 
-        this.collection.on('data-update', ::this.renderTable)
+        this.listenTo(this.collection, 'reset', this.render);
     }
 
     render () {
-        var data = super.render();
-        this.renderFilters(data);
+        if (this.templateRendered) {
+            this.renderTable();
+        }
+        else {
+            var data = super.render();
+            this.renderFilters(data);
+            this.templateRendered = true;
+        }
     }
 
     getRenderedData () {
@@ -80,5 +87,3 @@ TaskFilteredListView.prototype.filterChanged = function (event) {
     var filter = event.target.dataset.filter;
     this.collection.updateData(filter, event.target.value);
 };
-
-//TaskFilteredListView.prototype.update

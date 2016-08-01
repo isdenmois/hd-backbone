@@ -71,6 +71,5 @@ TicketsCollection.prototype.updateData = function (filter, value) {
         sessionStorage.removeItem('tickets-collection-selected-' + filter);
     }
 
-    this.fetch()
-        .then(() => this.trigger('data-update'));
+    this.fetch();
 };
