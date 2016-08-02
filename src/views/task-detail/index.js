@@ -1,9 +1,9 @@
 import { View } from 'backbone';
-import template from './task-detail.ejs';
-import commentsTemplate from './comments.ejs';
-import headerTemplate from './header.ejs';
+import template from './task-detail.hbs';
+import commentsTemplate from './comments.hbs';
 import TaskModel from '../../models/task';
 import LogView from '../modals/log';
+import CloseView from '../modals/close';
 import _ from 'lodash';
 
 export default class TaskDetail extends View {
@@ -13,9 +13,10 @@ export default class TaskDetail extends View {
             task_id: this.task_id
         });
 
-        this.listenTo(this.model, 'fetch', this.render);
+        this.listenTo(this.model, 'reset', this.render);
         this.modals = {
-            log: new LogView({model: this.model})
+            log: new LogView({model: this.model}),
+            close: new CloseView({model: this.model})
         };
 
     }
@@ -51,6 +52,7 @@ TaskDetail.prototype.showModal = function (event) {
 };
 
 TaskDetail.prototype.getRenderedData = function () {
-
-    return this.model.toJSON();
+    const data =  this.model.toJSON();
+    data.perms = ['view', 'log', 'close'];
+    return data;
 };

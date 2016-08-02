@@ -1,5 +1,5 @@
 import { View } from 'backbone';
-import logTemplate from './log.ejs';
+import logTemplate from './log.hbs';
 import { loadData } from '../../../services/data';
 import _ from 'lodash';
 
@@ -7,7 +7,7 @@ export default class LogView extends View {
     initialize () {
         this.$el.attr('role', 'dialog');
         document.body.appendChild(this.el);
-        this.listenTo(this.model, 'fetch', this.render);
+        this.listenTo(this.model, 'reset', this.render);
         this.errors = [];
     }
 
@@ -25,8 +25,8 @@ export default class LogView extends View {
 
 LogView.prototype.className = 'modal fade';
 LogView.prototype.events = {
-    'click .modal-footer .btn-primary': 'sendData',
-    'submit form': 'sendData'
+    'click .modal-footer .btn-primary': 'act',
+    'submit form': 'act'
 };
 LogView.prototype.template = logTemplate;
 LogView.prototype.actions = [
@@ -68,38 +68,49 @@ LogView.prototype.getData = function () {
     return data;
 };
 
-LogView.prototype.sendData = function (event) {
+LogView.prototype.getFormData = function () {
+    const data = {
+        tid: this.model.get('task_id'),
+        text : this.$comment.val(),
+        log_action: this.$('select.activity-select').val()
+    };
+    const hours = this.$hours.val();
+    if (hours) {
+        data.hours = hours;
+    }
+
+    return data;
+};
+
+LogView.prototype.validate = function (data) {
+
+    if (data.hours && Number(data.hours).toString() != data.hours) {
+        this.setError(this.$hours, 'Неправильно заполнено поле рабочих часов.');
+    }
+    if (data.text.length == 0) {
+        this.setError(this.$comment, 'Поле с комментарием -- пустое');
+    }
+
+};
+
+LogView.prototype.act = function (event) {
     event.preventDefault();
     this.clearErrors();
 
-    const tid = this.model.get('task_id');
-    const hours = this.$hours.val();
-    const text = this.$comment.val();
-    const log_action = this.$('select.activity-select').val();
-
-    if (hours && Number(hours).toString() != hours) {
-        this.setError(this.$hours, 'Неправильно заполнено поле рабочих часов.');
-    }
-    if (text.length == 0) {
-        this.setError(this.$comment, 'Поле с комментарием -- пустое');
-    }
+    const data = this.getFormData();
+    this.validate(data);
 
     if (this.errors.length > 0) {
         return;
     }
 
-    const params = {
-        tid,
-        log_action,
-        text
-    };
-    if (hours) {
-        params.hours = hours;
-    }
-
-    loadData('addLog', params, 'POST')
-        .then(() => this.model.trigger('modal-completed'))
+    this.sendData(data)
+        .then(() => this.refetch())
         .catch(error => this.setError(null, error));
+};
+
+LogView.prototype.sendData = function (data) {
+    return loadData('addLog', data, 'POST');
 };
 
 LogView.prototype.clearErrors = function () {
@@ -109,12 +120,20 @@ LogView.prototype.clearErrors = function () {
     this.errors = [];
 };
 
+
+LogView.prototype.refetch = function () {
+    return this.model
+        .fetch()
+        .then(() => this.hide())
+        .then(() => this.clearErrors());
+};
+
 LogView.prototype.setError = function (elem, error) {
     if (elem) {
-        this.$errors.removeClass('hidden');
         elem.parent().addClass('has-error');
     }
     this.$errors
+        .removeClass('hidden')
         .find('.error-content')
         .append('<p>' + error + '</p>');
     this.errors.push(error);

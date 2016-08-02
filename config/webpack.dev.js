@@ -4,6 +4,8 @@ const commonConfig = require('./webpack.common.js'); // the settings that are co
 
 module.exports = webpackMerge(commonConfig, {
   debug: true,
+  devtool: 'inline-source-map',
+
   devServer: {
     port: 3000,
     historyApiFallback: true,
@@ -12,8 +14,6 @@ module.exports = webpackMerge(commonConfig, {
       poll: 1000
     },
     outputPath: 'dist',
-
-    devtool: 'source-map',
 
     proxy: {
       '/rest*': {

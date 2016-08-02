@@ -1,7 +1,7 @@
 import { View, history } from 'backbone';
 import $ from 'jquery';
 import { auth } from '../../services/data';
-import template from './login.ejs'
+import template from './login.hbs'
 
 export default class LoginView extends View {
 

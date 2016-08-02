@@ -1,0 +1,30 @@
+<table class="table table-bordered table-hover dataTable">
+    <thead>
+    <tr role="row">
+        {{#each columns}}
+            {{#if_eq ../sortField field }}
+                <th class="{{ ../sortDir }}" data-field="{{ field }}">
+                    {{ name }}
+                </th>
+            {{else}}
+                <th class="{{ ../notSorted }}" data-field="{{ field }}">
+                    {{ name }}
+                </th>
+            {{/if_eq}}
+        {{/each}}
+    </tr>
+    </thead>
+    <tbody>
+    {{#each taskList}}
+        <tr class="color-palette clickable" role="row" data-id="{{ task_id }}">
+            {{#each ../columns}}
+                <td class="{{ className }}" >
+                    {{lookup .. field}}
+                </td>
+            {{/each}}
+        </tr>
+    {{/each}}
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>

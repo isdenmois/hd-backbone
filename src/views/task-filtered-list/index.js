@@ -1,6 +1,6 @@
 import TaskListView from '../task-list';
-import ticketsTemplate from './tickets.ejs';
-import filtersTemplate from './filters.ejs';
+import ticketsTemplate from './tickets.hbs';
+import filtersTemplate from './filters.hbs';
 import TicketsCollection from '../../collections/ticketsCollection';
 import config from '../../models/app';
 

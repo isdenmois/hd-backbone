@@ -19,7 +19,8 @@ module.exports = {
     // Absolute path that contains modules
     root: __dirname,
     alias: {
-      'underscore': 'lodash'
+      underscore: 'lodash',
+      handlebars: 'handlebars/dist/handlebars.min.js'
     }
   },
 
@@ -69,6 +70,10 @@ module.exports = {
       {
         test: /\.ejs$/,
         loader: 'ejs-loader?variable=data'
+      },
+      {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader?helperDirs[]=' + __dirname + '/../src/helpers'
       },
       {
         test: /bootstrap\/dist\/js\/umd\//,

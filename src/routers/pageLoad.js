@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import loadingTemplate from '../templates/loading.ejs';
+import loadingTemplate from '../templates/loading.hbs';
 import AppModel from '../models/app';
 
 let currentView = {};

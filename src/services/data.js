@@ -44,7 +44,7 @@ export function loadData (servlet, params = {}, method = 'GET') {
         return data.message;
       })
     .catch(function (error) {
-        if (error.substr(0, 11) == 'error type:') {
+        if (typeof error == 'string' && error.substr(0, 11) == 'error type:') {
             if (history.started) {
                 const fragment = history.getFragment();
                 history.navigate('login/' + fragment);

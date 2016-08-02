@@ -1,8 +1,7 @@
 import { View, history } from 'backbone';
 
-import template from './task-list.ejs';
-import tableTemplate from './table.ejs';
-import emptyTable from './emptyTable.ejs';
+import template from './task-list.hbs';
+import tableTemplate from './table.hbs';
 
 import AssignedCollection from '../../collections/assignedCollection';
 
@@ -29,7 +28,7 @@ TaskListView.prototype.columns = [
     },
     {
         name: 'Проект',
-        field: 'project_title'
+        field: 'project'
     },
     {
         name: 'Статус',

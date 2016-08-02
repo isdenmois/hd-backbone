@@ -1,10 +1,11 @@
 import { View, history } from 'backbone';
 import $ from 'jquery'
-import template from './app.ejs';
-import loadingTemplate from '../../templates/loading.ejs';
+import template from './app.hbs';
+import loadingTemplate from '../../templates/loading.hbs';
 import { loadData } from '../../services/data';
 
 import AppModel from '../../models/app';
+import NewTaskView from '../modals/new-task';
 
 export default class AppView extends View {
 
@@ -14,6 +15,7 @@ export default class AppView extends View {
     this.promise = AppModel.fetch();
 
     this.hidden = false;
+    this.NewTask = new NewTaskView({model: this.model});
 
     this.model.on('reset', this.render.bind(this));
     this.model.on('app:hide', this.hide.bind(this));
@@ -44,3 +46,11 @@ export default class AppView extends View {
     }
   }
 }
+
+AppView.prototype.events = {
+    'click .new-task-action': 'showNewTask'
+};
+
+AppView.prototype.showNewTask = function () {
+    this.NewTask.show();
+};

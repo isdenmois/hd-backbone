@@ -33,7 +33,7 @@ Task.prototype.fetch = function () {
             perms: data.perms
           });
           self.setInfo(data.task_info);
-          self.trigger('fetch');
+          self.trigger('reset');
       });
 };
 
@@ -81,7 +81,7 @@ Task.prototype.getLogs = function (logs) {
     log.id = +logs[i].lid;
     log.type = logs[i].action;
     log.task = logs[i].ticket_id;
-    log.hours = logs[i].hours;
+    log.hours = +logs[i].hours || 0;
     log.user = logs[i].user_name || logs[i].user_id;
     log.time = this.getDate(logs[i].created);
     log.description = logs[i].entry;

@@ -1,0 +1,37 @@
+<div class="col-sm-12">
+    <ul class="timeline">
+        {{#each this}}
+            {{#if_eq type 'TIMELINE'}}
+                <li class="time-label">
+                    <span class="bg-red">
+                        {{format_date time }}
+                    </span>
+                </li>
+            {{else}}
+                <li>
+                    <i class="{log.icon ? 'fa fa-' + log.icon : ''} bg-{log.color}"></i>
+                    <div class="timeline-item">
+                        <span class="time"><i class="fa fa-calendar-o"></i> {{format_date time true }}</span>
+                        {{#if hours}}
+                            <span class="time"><i class="fa fa-clock-o"></i> {{ hours }} hours</span>
+                        {{/if}}
+
+                        <h3 class="timeline-header"><a>{{ user }}</a></h3>
+
+                        <div class="timeline-body">{{breaklines description}}</div>
+                        {{#if_or canEdit canDelete}}
+                            <div class="timeline-footer">
+                                {{#if canEdit}}
+                                    <a class="btn btn-primary btn-xs" >Edit</a>
+                                {{/if}}
+                                {{#if canDelete }}
+                                    <a class="btn btn-danger btn-xs" >Delete</a>
+                                {{/if}}
+                            </div>
+                        {{/if_or}}
+                    </div>
+                </li>
+            {{/if_eq}}
+        {{/each}}
+    </ul>
+</div>

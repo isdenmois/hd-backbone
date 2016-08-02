@@ -29,13 +29,6 @@ Date.prototype.toString = function (withTime = false) {
     return `${day}.${month}.${year}`;
 };
 
-_.mixin({
-    nl2br : function(str, is_xhtml){
-        var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
-        return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
-    }
-});
-
 View.prototype.destroy = function () {
 
     // Remove models.

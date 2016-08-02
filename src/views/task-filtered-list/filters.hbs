@@ -1,0 +1,14 @@
+{{#each filters}}
+    <div class="form-group col-xs-12 col-md-6 col-lg-3">
+        <label>{{ title }}</label>
+        <select class="form-control task-filter" data-filter="{{ type }}" >
+            {{#each options}}
+                {{#if_eq value ../selected}}
+                    <option value="{{ value }}" selected>{{ title }}</option>
+                {{else}}
+                    <option value="{{ value }}">{{ title }}</option>
+                {{/if_eq}}
+            {{/each}}
+        </select>
+    </div>
+{{/each}}
